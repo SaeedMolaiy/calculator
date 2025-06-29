@@ -81,7 +81,8 @@
 
         </Border>
 
-        <Label Content="0"
+        <Label x:Name="ResultLabel"
+               Content="0"
                Grid.Column="0" 
                Grid.ColumnSpan="4"
                Grid.Row="1"
@@ -90,7 +91,8 @@
                FontSize="40px"
                Foreground="White"/>
 
-        <Button Content="%"              
+        <Button x:Name="ACButton"
+                Content="AC"              
                 Grid.Column="0"
                 Grid.Row="2"
                 FontSize="25px"
@@ -98,7 +100,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="CE"
+        <Button x:Name="NegetiveButton"
+                Content="+/-"
                 Grid.Column="1"
                 Grid.Row="2"
                 FontSize="25px"
@@ -106,7 +109,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="C"
+        <Button x:Name="PercentageButton"
+                Content="%"
                 Grid.Column="2"
                 Grid.Row="2"
                 FontSize="25px"
@@ -114,7 +118,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="/"
+        <Button x:Name="DivideButton"
+                Content="÷"
                 Grid.Column="3"
                 Grid.Row="2"
                 FontSize="25px"
@@ -122,7 +127,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="1"
+        <Button x:Name="NumberOneButton"
+                Content="1"
                 Grid.Column="0"
                 Grid.Row="3"
                 FontSize="25px"
@@ -130,7 +136,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="2"
+        <Button x:Name="NumberTwoButton"
+                Content="2"
                 Grid.Column="1"
                 Grid.Row="3"
                 FontSize="25px"
@@ -138,7 +145,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="3"
+        <Button x:Name="NumberThreeButton"
+                Content="3"
                 Grid.Column="2"
                 Grid.Row="3"
                 FontSize="25px"
@@ -146,7 +154,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="X"
+        <Button x:Name="MultiplyButton"
+                Content="*"
                 Grid.Column="3"
                 Grid.Row="3"
                 FontSize="25px"
@@ -154,7 +163,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="4"
+        <Button x:Name="NumberFourButton"
+                Content="4"
                 Grid.Column="0"
                 Grid.Row="4"
                 FontSize="25px"
@@ -162,7 +172,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="5"
+        <Button x:Name="NumberFiveButton"
+                Content="5"
                 Grid.Column="1"
                 Grid.Row="4"
                 FontSize="25px"
@@ -170,7 +181,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="6"
+        <Button x:Name="NumberSixButton"
+                Content="6"
                 Grid.Column="2"
                 Grid.Row="4"
                 FontSize="25px"
@@ -178,7 +190,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="-"
+        <Button x:Name="MinusButton"
+                Content="-"
                 Grid.Column="3"
                 Grid.Row="4"
                 FontSize="25px"
@@ -186,7 +199,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="7"
+        <Button x:Name="NumberSevenButton"
+                Content="7"
                 Grid.Column="0"
                 Grid.Row="5"
                 FontSize="25px"
@@ -194,7 +208,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="8"
+        <Button x:Name="NumberEightButton"
+                Content="8"
                 Grid.Column="1"
                 Grid.Row="5"
                 FontSize="25px"
@@ -202,7 +217,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="9"
+        <Button x:Name="NumberNineButton"
+                Content="9"
                 Grid.Column="2"
                 Grid.Row="5"
                 FontSize="25px"
@@ -210,7 +226,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="+"
+        <Button x:Name="PlusButton"
+                Content="+"
                 Grid.Column="3"
                 Grid.Row="5"
                 FontSize="25px"
@@ -218,7 +235,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="0"
+        <Button x:Name="NumberZeroButton"
+                Content="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Grid.Row="6"
@@ -227,7 +245,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="."
+        <Button x:Name="DecimalButton"
+                Content="."
                 Grid.Column="2"
                 Grid.Row="6"
                 FontSize="25px"
@@ -235,7 +254,8 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button Content="="
+        <Button x:Name="EqualButton"
+                Content="="
                 Grid.Column="3"
                 Grid.Row="6"
                 FontSize="25px"
