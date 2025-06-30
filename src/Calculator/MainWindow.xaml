@@ -23,7 +23,8 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -48,26 +49,23 @@
 
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
 
-                    <Button
-                        Click="Minimize"
-                        Cursor="Hand" 
-                        Content="—" 
-                        Width="40" 
-                        Background="Transparent" 
-                        Foreground="White"
-                        BorderThickness="0"/>
+                    <Button x:Name="MinimizeButton"
+                            Cursor="Hand" 
+                            Content="—" 
+                            Width="40" 
+                            Background="Transparent" 
+                            Foreground="White"
+                            BorderThickness="0"/>
 
-                    <Button 
-                        Click="Maximize"
-                        Cursor="Hand"
-                        Content="◻"
-                        Width="40" 
-                        Background="Transparent" 
-                        Foreground="White" 
-                        BorderThickness="0"/>
+                    <Button x:Name="MaximizeButton"
+                            Cursor="Hand"
+                            Content="◻"
+                            Width="40" 
+                            Background="Transparent" 
+                            Foreground="White" 
+                            BorderThickness="0"/>
 
-                    <Button 
-                            Click="Close"
+                    <Button x:Name="CloseButton"
                             Cursor="Hand" 
                             Content="✕" 
                             Width="40" 
@@ -81,20 +79,28 @@
 
         </Border>
 
+        <Label Grid.Column="0" 
+               Grid.ColumnSpan="4"
+               Grid.Row="1"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Left"
+               FontSize="18px"
+               Foreground="Gray"/>
+
         <Label x:Name="ResultLabel"
                Content="0"
                Grid.Column="0" 
                Grid.ColumnSpan="4"
-               Grid.Row="1"
+               Grid.Row="2"
                VerticalContentAlignment="Bottom"
                HorizontalContentAlignment="Right"
-               FontSize="40px"
+               FontSize="30px"
                Foreground="White"/>
 
         <Button x:Name="ACButton"
                 Content="AC"              
                 Grid.Column="0"
-                Grid.Row="2"
+                Grid.Row="3"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -103,7 +109,7 @@
         <Button x:Name="NegetiveButton"
                 Content="+/-"
                 Grid.Column="1"
-                Grid.Row="2"
+                Grid.Row="3"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -112,7 +118,7 @@
         <Button x:Name="PercentageButton"
                 Content="%"
                 Grid.Column="2"
-                Grid.Row="2"
+                Grid.Row="3"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -121,7 +127,7 @@
         <Button x:Name="DivideButton"
                 Content="÷"
                 Grid.Column="3"
-                Grid.Row="2"
+                Grid.Row="3"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -130,7 +136,7 @@
         <Button x:Name="NumberOneButton"
                 Content="1"
                 Grid.Column="0"
-                Grid.Row="3"
+                Grid.Row="4"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -139,7 +145,7 @@
         <Button x:Name="NumberTwoButton"
                 Content="2"
                 Grid.Column="1"
-                Grid.Row="3"
+                Grid.Row="4"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -148,7 +154,7 @@
         <Button x:Name="NumberThreeButton"
                 Content="3"
                 Grid.Column="2"
-                Grid.Row="3"
+                Grid.Row="4"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -157,7 +163,7 @@
         <Button x:Name="MultiplyButton"
                 Content="*"
                 Grid.Column="3"
-                Grid.Row="3"
+                Grid.Row="4"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -166,7 +172,7 @@
         <Button x:Name="NumberFourButton"
                 Content="4"
                 Grid.Column="0"
-                Grid.Row="4"
+                Grid.Row="5"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -175,7 +181,7 @@
         <Button x:Name="NumberFiveButton"
                 Content="5"
                 Grid.Column="1"
-                Grid.Row="4"
+                Grid.Row="5"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -184,7 +190,7 @@
         <Button x:Name="NumberSixButton"
                 Content="6"
                 Grid.Column="2"
-                Grid.Row="4"
+                Grid.Row="5"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -193,7 +199,7 @@
         <Button x:Name="MinusButton"
                 Content="-"
                 Grid.Column="3"
-                Grid.Row="4"
+                Grid.Row="5"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -202,7 +208,7 @@
         <Button x:Name="NumberSevenButton"
                 Content="7"
                 Grid.Column="0"
-                Grid.Row="5"
+                Grid.Row="6"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -211,7 +217,7 @@
         <Button x:Name="NumberEightButton"
                 Content="8"
                 Grid.Column="1"
-                Grid.Row="5"
+                Grid.Row="6"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -220,7 +226,7 @@
         <Button x:Name="NumberNineButton"
                 Content="9"
                 Grid.Column="2"
-                Grid.Row="5"
+                Grid.Row="6"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -229,7 +235,7 @@
         <Button x:Name="PlusButton"
                 Content="+"
                 Grid.Column="3"
-                Grid.Row="5"
+                Grid.Row="6"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -239,7 +245,7 @@
                 Content="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Grid.Row="6"
+                Grid.Row="7"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -248,7 +254,7 @@
         <Button x:Name="DecimalButton"
                 Content="."
                 Grid.Column="2"
-                Grid.Row="6"
+                Grid.Row="7"
                 FontSize="25px"
                 Margin="2px"
                 Background="#333233"
@@ -257,7 +263,7 @@
         <Button x:Name="EqualButton"
                 Content="="
                 Grid.Column="3"
-                Grid.Row="6"
+                Grid.Row="7"
                 FontSize="25px"
                 Margin="2px"
                 Background="#4dc2fe"
