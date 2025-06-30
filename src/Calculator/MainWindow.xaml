@@ -32,10 +32,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0"
+        <Border x:Name="TitleBar"
+                Grid.Row="0"
                 Grid.Column="0"
-                Background="#222" 
-                MouseLeftButtonDown="DragWindow"
+                Background="#222"
                 Grid.ColumnSpan="4">
 
             <DockPanel LastChildFill="True">

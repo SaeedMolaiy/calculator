@@ -13,7 +13,7 @@ namespace Calculator
         public MainWindow()
         {
             InitializeComponent();
-            SetButtonsClickEventHandlers();
+            SetEventHandlers();
         }
 
         private decimal CurrentNumber
@@ -31,8 +31,39 @@ namespace Calculator
         {
         }
 
-        private void SetButtonsClickEventHandlers()
+        private void AddNumber(decimal number)
         {
+            if (CurrentNumber == 0)
+            {
+                ResultLabel.Content = number.ToString();
+                return;
+            }
+
+            var newLabelContent = CurrentNumber.ToString();
+            var appendDecimalSeparator =
+                haveDecimal && newLabelContent.Contains(DecimalSeparator) == false;
+
+            if (appendDecimalSeparator)
+            {
+                newLabelContent += DecimalSeparator;
+            }
+
+            ResultLabel.Content = newLabelContent + number.ToString();
+        }
+
+        private void SetMathOperation(MathOperation operation)
+        {
+            mathOperation = operation;
+        }
+
+        private void SetEventHandlers()
+        {
+            //Window
+            CloseButton.Click += CloseButton_Click;
+            MinimizeButton.Click += MinimizeButton_Click;
+            MaximizeButton.Click += MaximizeButton_Click;
+            TitleBar.MouseLeftButtonDown += TitleBarControl_MouseLeftButtonDown;
+
             // Math Operations
             PlusButton.Click += PlusButton_Click;
             MinusButton.Click += MinusButton_Click;
@@ -51,15 +82,23 @@ namespace Calculator
             NumberEightButton.Click += NumberEightButton_Click;
             NumberNineButton.Click += NumberNineButton_Click;
             NumberZeroButton.Click += NumberZeroButton_Click;
-
-            //Window
-            CloseButton.Click += CloseButton_Click;
-            MinimizeButton.Click += MinimizeButton_Click;
-            MaximizeButton.Click += MaximizeButton_Click;
+            DecimalButton.Click += DecimalButton_Click;
 
             // Others
-            DecimalButton.Click += DecimalButton_Click;
             ACButton.Click += ACButton_Click;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e) =>
+            WindowState = (WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+
+        private void TitleBarControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+                DragMove();
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e) => SetMathOperation(MathOperation.Plus);
@@ -92,13 +131,6 @@ namespace Calculator
 
         private void NumberZeroButton_Click(object sender, RoutedEventArgs e) => AddNumber(0);
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
-
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-
-        private void MaximizeButton_Click(object sender, RoutedEventArgs e) =>
-            WindowState = (WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
-
         private void DecimalButton_Click(object sender, RoutedEventArgs e)
         {
             if (haveDecimal)
@@ -112,37 +144,6 @@ namespace Calculator
         {
             ResultLabel.Content = "0";
             haveDecimal = false;
-        }
-
-        private void DragWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ButtonState == MouseButtonState.Pressed)
-                DragMove();
-        }
-
-        private void AddNumber(decimal number)
-        {
-            if (CurrentNumber == 0)
-            {
-                ResultLabel.Content = number.ToString();
-                return;
-            }
-
-            var newLabelContent = CurrentNumber.ToString();
-            var appendDecimalSeparator =
-                haveDecimal && newLabelContent.Contains(DecimalSeparator) == false;
-
-            if (appendDecimalSeparator)
-            {
-                newLabelContent += DecimalSeparator;
-            }
-
-            ResultLabel.Content = newLabelContent + number.ToString();
-        }
-
-        private void SetMathOperation(MathOperation operation)
-        {
-            mathOperation = operation;
         }
     }
 }
