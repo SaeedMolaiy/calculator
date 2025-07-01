@@ -106,7 +106,7 @@
                 Background="#333233"
                 Foreground="White"/>
 
-        <Button x:Name="NegetiveButton"
+        <Button x:Name="NegativeButton"
                 Content="+/-"
                 Grid.Column="1"
                 Grid.Row="3"
