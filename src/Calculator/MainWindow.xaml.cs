@@ -218,7 +218,7 @@ namespace Calculator
 
             if (clickButton != null)
                 _ = SimulateButtonClick(
-                    clickButton, NumberButtonsDefaultColor, NumberButtonsClickColor);
+                        clickButton, NumberButtonsDefaultColor, NumberButtonsClickColor);
 
             return;
         }
@@ -288,7 +288,7 @@ namespace Calculator
                 }
 
                 _ = SimulateButtonClick(
-                    clickedButton, defaultColor, color);
+                        clickedButton, defaultColor, color);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Calculator
             if (key == Key.OemPeriod)
             {
                 _ = SimulateButtonClick(
-                    DecimalButton, NumberButtonsDefaultColor, NumberButtonsClickColor);
+                        DecimalButton, NumberButtonsDefaultColor, NumberButtonsClickColor);
             }
         }
 
