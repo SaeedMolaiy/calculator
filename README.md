@@ -1,4 +1,4 @@
-One day, our IT department rolled out a Windows image so "optimized"… it forgot the Calculator. Yes. No calculator. None. Zero. Nada.
+One day, our IT department rolled out a Windows image so "optimized"… it forgot the Calculator. Yes. No calculator. None.
 
 We could’ve just installed one. But where’s the fun in that?
 So I built one — using WPF!
