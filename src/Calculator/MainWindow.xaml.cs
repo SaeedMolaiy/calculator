@@ -7,15 +7,6 @@ namespace Calculator
 {
     public partial class MainWindow : Window
     {
-        private const string NumberButtonsDefaultColor = "#3a3a3b";
-        private const string NumberButtonsClickColor = "#333233";
-
-        private const string EqualButtonDefaultColor = "#4dc2fe";
-        private const string EqualButtonClickColor = "#1b9cd8";
-
-        private const string OtherButtonsDefaultColor = "#333233";
-        private const string OtherButtonsClickColor = "#3a3a3b";
-
         private const char DecimalSeparator = '.';
 
         private bool haveDecimal = false;
@@ -218,7 +209,7 @@ namespace Calculator
 
             if (clickButton != null)
                 _ = SimulateButtonClick(
-                        clickButton, NumberButtonsDefaultColor, NumberButtonsClickColor);
+                        clickButton, App.NumberButtonBrush, App.NumberButtonClickBrush);
 
             return;
         }
@@ -257,16 +248,22 @@ namespace Calculator
                     clickedButton = EqualButton;
                     break;
 
+                case Key.Add:
+                    clickedButton = PlusButton;
+                    break;
+
                 case Key.OemPlus:
                     clickedButton =
                         IsHoldingShift() ? EqualButton : PlusButton;
                     break;
 
+                case Key.Subtract:
                 case Key.OemMinus:
                     clickedButton = MinusButton;
                     break;
 
                 case Key.OemQuestion:
+                case Key.Divide:
                     clickedButton = DivideButton;
                     break;
 
@@ -274,21 +271,25 @@ namespace Calculator
                     if (IsHoldingShift())
                         clickedButton = MultiplyButton;
                     break;
+
+                case Key.Multiply:
+                    clickedButton = MultiplyButton;
+                    break;
             }
 
             if (clickedButton != null)
             {
-                var defaultColor = OtherButtonsDefaultColor;
-                var color = OtherButtonsClickColor;
+                var defaultColorBrush = App.OperationButtonBrush;
+                var targetColorBrush = App.OperationButtonClickBrush;
 
                 if (clickedButton.Equals(EqualButton))
                 {
-                    defaultColor = EqualButtonDefaultColor;
-                    color = EqualButtonClickColor;
+                    defaultColorBrush = App.EqualButtonBrush;
+                    targetColorBrush = App.EqualButtonClickBrush;
                 }
 
                 _ = SimulateButtonClick(
-                        clickedButton, defaultColor, color);
+                        clickedButton, defaultColorBrush, targetColorBrush);
             }
         }
 
@@ -297,7 +298,7 @@ namespace Calculator
             if (key == Key.OemPeriod)
             {
                 _ = SimulateButtonClick(
-                        DecimalButton, NumberButtonsDefaultColor, NumberButtonsClickColor);
+                        DecimalButton, App.NumberButtonBrush, App.NumberButtonClickBrush);
             }
         }
 
@@ -317,30 +318,13 @@ namespace Calculator
             }
         }
 
-        private async Task SimulateButtonClick(Button button, string defaultColorHex, string colorHex)
+        private async Task SimulateButtonClick(Button button, SolidColorBrush defaultColorBrush, SolidColorBrush targetColorBrush)
         {
             button.RaiseEvent(_clickEventArgs);
 
-            var defaultColor = GetColorFromHex(defaultColorHex);
-            var color = GetColorFromHex(colorHex);
-
-            button.Background =
-                new SolidColorBrush(color);
-
+            button.Background = targetColorBrush;
             await Task.Delay(120);
-
-            button.Background =
-                new SolidColorBrush(defaultColor);
-        }
-
-        private Color GetColorFromHex(string hex)
-        {
-            var convertedColor = _colorConverter.ConvertFrom(hex);
-
-            if (convertedColor != null)
-                return (Color)convertedColor;
-
-            return new Color();
+            button.Background = defaultColorBrush;
         }
 
         private static bool TryParseNumberFromKeyboardKey(Key key, out decimal digit)
