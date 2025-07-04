@@ -31,7 +31,22 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Margin" Value="2"/>
         <Setter Property="FontSize" Value="25"/>
-
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="2">
+                        <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="TitleBarButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
@@ -47,11 +62,23 @@
 
         <Setter Property="Background" Value="{StaticResource OperationButtonBrush}"/>
 
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource OperationButtonClickBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+
     </Style>
 
     <Style x:Key="NumberButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
 
         <Setter Property="Background" Value="{StaticResource NumberButtonBrush}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource NumberButtonClickBrush}"/>
+            </Trigger>
+        </Style.Triggers>
 
     </Style>
 
@@ -59,6 +86,12 @@
 
         <Setter Property="Background" Value="{StaticResource EqualButtonBrush}"/>
         <Setter Property="Foreground" Value="Black"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource EqualButtonClickBrush}"/>
+            </Trigger>
+        </Style.Triggers>
 
     </Style>
 

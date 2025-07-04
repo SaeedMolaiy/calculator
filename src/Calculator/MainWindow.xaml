@@ -10,7 +10,8 @@
         Width="350"
         WindowStyle="None"
         AllowsTransparency="False"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Grid Background="{StaticResource BackgroundBrush}">
 
