@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Data;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,10 +11,9 @@ namespace Calculator
         private const char DecimalSeparator = '.';
 
         private bool haveDecimal = false;
-        private MathOperation mathOperation;
 
-        private readonly ColorConverter _colorConverter;
         private readonly RoutedEventArgs _clickEventArgs;
+        private readonly DataTable _dataTable;
 
         private readonly Dictionary<decimal, Button> _numberToButtonMap;
 
@@ -21,7 +21,7 @@ namespace Calculator
         {
             InitializeComponent();
 
-            _colorConverter = new ColorConverter();
+            _dataTable = new DataTable();
             _clickEventArgs = new RoutedEventArgs(Button.ClickEvent);
 
             _numberToButtonMap = new Dictionary<decimal, Button>()
@@ -44,11 +44,15 @@ namespace Calculator
             ConfigureNumberButtons();
         }
 
+        private string ResultLableContent => ResultLabel.Content?.ToString() ?? string.Empty;
+
+        private string CurrentExpression => ExpressionLabel.Content?.ToString() ?? string.Empty;
+
         private decimal CurrentNumber
         {
             get
             {
-                if (decimal.TryParse(ResultLabel.Content.ToString(), out var currentNumber))
+                if (decimal.TryParse(ResultLableContent.ToString(), out var currentNumber))
                     return currentNumber;
 
                 return 0;
@@ -57,13 +61,44 @@ namespace Calculator
 
         private void Calculate()
         {
+            var expression =
+                CurrentExpression.Trim() + $"{CurrentNumber}";
+
+            var result =
+                _dataTable.Compute(expression, null).ToString() ?? "0";
+
+            SetExpressionLabelContent(string.Empty);
+            SetResultLabelContent(result);
+            haveDecimal = false;
+        }
+
+        private void SetMathOperation(MathOperation operation)
+        {
+            if (CurrentNumber == 0)
+                return;
+
+            string operationSymbol = operation switch
+            {
+                MathOperation.Plus => "+",
+                MathOperation.Minus => "-",
+                MathOperation.Multiply => "*",
+                MathOperation.Divide => "/",
+                _ => ""
+            };
+
+            var expression =
+                $"{CurrentExpression}{CurrentNumber} {operationSymbol} ";
+
+            SetExpressionLabelContent(expression);
+            SetResultLabelContent("0");
+            haveDecimal = false;
         }
 
         private void AddNumber(decimal number)
         {
-            if (CurrentNumber == 0)
+            if (ResultLableContent == "0")
             {
-                ResultLabel.Content = number.ToString();
+                SetResultLabelContent(number.ToString());
                 return;
             }
 
@@ -76,12 +111,7 @@ namespace Calculator
                 newLabelContent += DecimalSeparator;
             }
 
-            ResultLabel.Content = newLabelContent + number.ToString();
-        }
-
-        private void SetMathOperation(MathOperation operation)
-        {
-            mathOperation = operation;
+            SetResultLabelContent(newLabelContent + number.ToString());
         }
 
         private void ConfigureWindowEventHandlers()
@@ -99,6 +129,7 @@ namespace Calculator
             MinusButton.Click += MinusButton_Click;
             DivideButton.Click += DivideButton_Click;
             MultiplyButton.Click += MultiplyButton_Click;
+            PercentageButton.Click += PercentageButton_Click;
             EqualButton.Click += EqualButton_Click;
         }
 
@@ -142,32 +173,39 @@ namespace Calculator
 
         private void MultiplyButton_Click(object sender, RoutedEventArgs e) => SetMathOperation(MathOperation.Multiply);
 
+        private void PercentageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Calculate();
+
+            SetResultLabelContent(
+                (CurrentNumber / 100).ToString());
+        }
+
         private void EqualButton_Click(object sender, RoutedEventArgs e) => Calculate();
 
         private void DecimalButton_Click(object sender, RoutedEventArgs e)
         {
-            var content =
-                ResultLabel.Content.ToString();
-
-            if (string.IsNullOrEmpty(content))
+            if (string.IsNullOrEmpty(ResultLableContent))
                 return;
 
-            if (haveDecimal && content.Contains(DecimalSeparator))
+            if (haveDecimal && ResultLableContent.Contains(DecimalSeparator))
                 return;
 
-            ResultLabel.Content = $"{CurrentNumber}{DecimalSeparator}";
+            SetResultLabelContent($"{CurrentNumber}{DecimalSeparator}");
             haveDecimal = true;
         }
 
         private void ACButton_Click(object sender, RoutedEventArgs e)
         {
-            ResultLabel.Content = "0";
+            SetExpressionLabelContent(string.Empty);
+            SetResultLabelContent("0");
+
             haveDecimal = false;
         }
 
         private void NegativeButton_Click(object sender, RoutedEventArgs e)
         {
-            ResultLabel.Content = (CurrentNumber * -1).ToString();
+            SetResultLabelContent((CurrentNumber * -1).ToString());
         }
 
         private void NumberButton_Click(object sender, RoutedEventArgs e)
@@ -198,9 +236,6 @@ namespace Calculator
 
         private void HandleNumberKeyPress(Key key)
         {
-            if (IsHoldingShift())
-                return;
-
             if (TryParseNumberFromKeyboardKey(key, out var pressedNumber) == false)
                 return;
 
@@ -216,7 +251,7 @@ namespace Calculator
 
         private void HandleCopyAndPasteKeyPress(Key key)
         {
-            if (IsHoldingControl() == false)
+            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) == false)
                 return;
 
             if (key == Key.C)
@@ -232,7 +267,7 @@ namespace Calculator
 
                     if (decimal.TryParse(pastedText, out _))
                     {
-                        ResultLabel.Content = pastedText;
+                        SetResultLabelContent(pastedText);
                     }
                 }
             }
@@ -248,28 +283,19 @@ namespace Calculator
                     clickedButton = EqualButton;
                     break;
 
+                case Key.OemPlus:
                 case Key.Add:
                     clickedButton = PlusButton;
-                    break;
+                    break; ;
 
-                case Key.OemPlus:
-                    clickedButton =
-                        IsHoldingShift() ? EqualButton : PlusButton;
-                    break;
-
-                case Key.Subtract:
                 case Key.OemMinus:
+                case Key.Subtract:
                     clickedButton = MinusButton;
                     break;
 
                 case Key.OemQuestion:
                 case Key.Divide:
                     clickedButton = DivideButton;
-                    break;
-
-                case Key.D8:
-                    if (IsHoldingShift())
-                        clickedButton = MultiplyButton;
                     break;
 
                 case Key.Multiply:
@@ -306,15 +332,14 @@ namespace Calculator
         {
             if (key == Key.Back)
             {
-                var content =
-                    ResultLabel.Content.ToString() ?? "";
+                var content = ResultLableContent;
 
                 if (content.Length == 1)
                     content = "0";
                 else
                     content = content[..^1];
 
-                ResultLabel.Content = content;
+                SetResultLabelContent(content);
             }
         }
 
@@ -350,10 +375,14 @@ namespace Calculator
             return decimal.Parse(content);
         }
 
-        private static bool IsHoldingShift() =>
-             Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+        private void SetResultLabelContent(string content)
+        {
+            ResultLabel.Content = content;
+        }
 
-        private static bool IsHoldingControl() =>
-             Keyboard.Modifiers.HasFlag(ModifierKeys.Control);
+        private void SetExpressionLabelContent(string content)
+        {
+            ExpressionLabel.Content = content;
+        }
     }
 }

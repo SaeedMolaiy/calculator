@@ -68,11 +68,12 @@
 
         </Border>
 
-        <Label Grid.Column="0" 
+        <Label x:Name="ExpressionLabel"
+               Grid.Column="0" 
                Grid.ColumnSpan="4"
                Grid.Row="1"
                VerticalContentAlignment="Center"
-               HorizontalContentAlignment="Left"
+               HorizontalContentAlignment="Right"
                FontSize="18px"
                Foreground="Gray"/>
 
