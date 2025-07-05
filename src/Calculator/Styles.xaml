@@ -27,9 +27,11 @@
 
     <Style x:Key="ButtonStyle" TargetType="Button">
 
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Margin" Value="1"/>
         <Setter Property="FontSize" Value="25"/>
         <Setter Property="Template">
             <Setter.Value>
